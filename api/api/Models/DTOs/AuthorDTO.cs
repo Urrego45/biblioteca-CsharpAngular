@@ -5,7 +5,7 @@ namespace api.Models.DTOs
 {
     public class AuthorDTO
     {
-        public int AuthorId { get; set; }
+        public int? AuthorId { get; set; }
 
         [Column(TypeName = "nvarchar(max)")]
         [Required(ErrorMessage = "Description is required")]
