@@ -16,7 +16,7 @@ namespace api.Custom
             _configuration = configuration;
         }
 
-        public string encriptarSHA256(string texto)
+        public string encryptSHA256(string texto)
         {
             using (SHA256 sha256Hash = SHA256.Create())
             {
@@ -34,13 +34,13 @@ namespace api.Custom
             }
         }
 
-        public string generarJWT(User modelo)
+        public string generateJWT(User modelo)
         {
             //crear la informacion del usuario para token
             var userClaims = new[]
             {
-                new Claim(ClaimTypes.NameIdentifier, modelo.IdUsuario.ToString()),
-                new Claim(ClaimTypes.Email, modelo.Correo!)
+                new Claim(ClaimTypes.NameIdentifier, modelo.UserId.ToString()),
+                new Claim(ClaimTypes.Email, modelo.Email!)
             };
 
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:key"]!));
@@ -56,7 +56,7 @@ namespace api.Custom
             return new JwtSecurityTokenHandler().WriteToken(jwtConfig);
         }
 
-        public bool validarToken(string token)
+        public bool tokenValidate(string token)
         {
             var claimsPrincipal = new ClaimsPrincipal();
             var tokenHandler = new JwtSecurityTokenHandler();
